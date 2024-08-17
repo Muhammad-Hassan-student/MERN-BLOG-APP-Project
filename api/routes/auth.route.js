@@ -5,7 +5,7 @@ import { signUpController } from '../controller/auth.controller.js';
 const router=express.Router();
 
 
-router.post('/auth-test',signUpController);
+router.post('/signUp',signUpController);
 
 
 
