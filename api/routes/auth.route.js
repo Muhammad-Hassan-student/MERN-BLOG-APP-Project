@@ -1,13 +1,14 @@
 import express from 'express'
-import { signUpController } from '../controller/auth.controller.js';
+import { signInController, signUpController } from '../controller/auth.controller.js';
 
 
 const router=express.Router();
 
-
+// ============================ sign up routes ===================================
 router.post('/signUp',signUpController);
 
-
+// ============================= sign in routes =================================
+router.post('/signIn',signInController);
 
 
 
