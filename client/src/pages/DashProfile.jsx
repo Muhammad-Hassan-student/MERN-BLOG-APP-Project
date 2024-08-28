@@ -6,7 +6,7 @@ import { app } from '../firebase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useDispatch } from 'react-redux'
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, updateInFailure, updateInStart, updateInSuccess } from '../redux/user/userSlice'
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutSuccess, updateInFailure, updateInStart, updateInSuccess } from '../redux/user/userSlice'
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 
@@ -146,6 +146,23 @@ export default function DashProfile() {
       }
     }
 
+    // sign out the user
+    const handleSignOut=async () => {
+      try {
+        const res = await fetch('/api/v1/user/signOut',{
+          method: 'POST',
+        });
+        const data=await res.json();
+        if(!res.ok){
+          console.log(data.message);
+        }else{
+          dispatch(signOutSuccess());
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
     /*========================================                 ==========================================*/
   return (
     
@@ -210,7 +227,7 @@ export default function DashProfile() {
       </form>
       <div className='text-red-500 flex justify-between mt-5'>
         <span className='cursor-pointer' onClick={()=>setShowModal(true)}>Delete Account</span>
-        <span className='cursor-pointer'>Sign Out</span>
+        <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
       {updateUserSuccess && (
         <Alert className='mt-5' color={'green'}>{updateUserSuccess}</Alert>
