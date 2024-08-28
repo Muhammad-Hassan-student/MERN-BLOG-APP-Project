@@ -4,12 +4,15 @@ import colors from 'colors'
 import dotenv, { config } from 'dotenv'
 import userRoutes from './routes/userRoutes.js'
 import authRoutes from './routes/auth.route.js'
+import cookieParser from 'cookie-parser';
 
 //********************************* CONFIG  ************************** 
 //config express
 const app=express();
 //for the enable requested to api
-app.use(express.json())
+app.use(express.json());
+//for the enable package cookie parser
+app.use(cookieParser());
 //config dotenv
 dotenv.config();
 
