@@ -1,5 +1,5 @@
 import express from "express";
-import { updateUser } from "../controller/userController.js";
+import { deleteUser, updateUser } from "../controller/userController.js";
 import { verifyUser } from "../utils/verifyUser.js";
 
 const router = express.Router();
@@ -8,7 +8,11 @@ const router = express.Router();
 //     res.json("Hello")
 // });
 
-//update user profile
+// ====================================== update user profile =============================
 router.put('/update/:userId',verifyUser,updateUser)
+
+// ====================================== Delete User ======================================
+router.delete('/delete/:userId',verifyUser,deleteUser)
+
 
 export default router;
