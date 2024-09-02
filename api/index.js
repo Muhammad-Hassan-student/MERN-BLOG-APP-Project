@@ -2,9 +2,10 @@ import express from 'express'
 import mongoose from 'mongoose';
 import colors from 'colors'
 import dotenv, { config } from 'dotenv'
-import userRoutes from './routes/userRoutes.js'
+import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
 import cookieParser from 'cookie-parser';
+import postRoutes from './routes/post.route.js'
 
 //********************************* CONFIG  ************************** 
 //config express
@@ -20,7 +21,7 @@ dotenv.config();
 // ----------------------- now make routes -----------------------
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/auth',authRoutes);
-
+app.use('/api/v1/post',postRoutes);
 
 
 

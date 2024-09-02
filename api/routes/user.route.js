@@ -1,6 +1,6 @@
 import express from "express";
-import { deleteUser, signOut, updateUser } from "../controller/userController.js";
-import { verifyUser } from "../utils/verifyUser.js";
+import { deleteUser, signOut, updateUser } from "../controller/user.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
@@ -9,10 +9,10 @@ const router = express.Router();
 // });
 
 // ====================================== update user profile =============================
-router.put('/update/:userId',verifyUser,updateUser)
+router.put('/update/:userId',verifyToken,updateUser)
 
 // ====================================== Delete User ======================================
-router.delete('/delete/:userId',verifyUser,deleteUser)
+router.delete('/delete/:userId',verifyToken,deleteUser)
 
 // ==================================== Sign out ===========================================
 router.post('/signOut',signOut)
