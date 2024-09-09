@@ -13,6 +13,10 @@ import PrivateRoutes from './components/PrivateRoutes'
 import OnlyAdminRoutes from './components/OnlyAdminRoutes'
 import CreatePost from './pages/CreatePost'
 
+import PostUpdate from './pages/PostUpdate'
+
+
+
 
 function App() {
  
@@ -30,6 +34,7 @@ function App() {
         </Route>
         <Route element={<OnlyAdminRoutes/>}>
           <Route path='/create-post' element={<CreatePost/>}/>
+          <Route path='/update-post/:postId' element={<PostUpdate/>}/>
 
           </Route>
           <Route path='/sign-up' element={<SignUp/>}/>
