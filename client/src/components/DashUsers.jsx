@@ -10,7 +10,9 @@ export default function DashUsers() {
   const [users, setUsers] = useState([]);
   const [showMore,setShowMore] =useState(true);
   const [showModal,setShowModal]=useState(false);
-  const [postIdToDelete,setUserIdToDelete]=useState('')
+  const [userIdToDelete,setUserIdToDelete]=useState('')
+
+  console.log(userIdToDelete);
   //get post
   useEffect(() => {
     const fetchUsers = async () => {
@@ -19,7 +21,7 @@ export default function DashUsers() {
         const data = await res.json();
         if (res.ok) {
             setUsers(data.users);
-          if(data.users.length < 9){
+          if(data.users.length < 3){
             setShowMore(false);
           }
         }
@@ -37,8 +39,8 @@ export default function DashUsers() {
       const res = await fetch(`/api/v1/user/getUsers?&startIndex=${startIndex}`);
       const data= await res.json();
       if(res.ok){
-        setUserPosts((prev) => [...prev, ...data.posts]);
-        if(data.users.length < 9) {
+        setUsers((prev) => [...prev, ...data.users]);
+        if(data.users.length < 3) {
           setShowMore(false);
         }
       }
@@ -48,17 +50,17 @@ export default function DashUsers() {
   }
 
   //Post delete
-  const handleDeletePost=async () => {
+  const handleDeleteUser=async () => {
     setShowModal(false);
     try {
-      const res=await fetch(`/api/v1/post/deletePost/${UserIdToDelete}/${currentUser._id}`,{
+      const res=await fetch(`/api/v1/user/delete/${userIdToDelete}`,{
         method: 'DELETE'
       });
       const data =await res.json();
       if(!res.ok){
         console.log(data.message)
       }else{
-        setUsers((user) => prev.filter((user) => user._id !== userIdToDelete));
+        setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
       }
     } catch (error) {
       console.log(error.message);
@@ -99,7 +101,7 @@ export default function DashUsers() {
                   <Table.Cell>{user.email}</Table.Cell>
                   <Table.Cell>{user.isAdmin ? <FaCheck className="text-green-700 text-lg"/> : <FaTimes className="text-red-600"/>}</Table.Cell>
                   <Table.Cell>
-                    <span className='font-medium text-red-500 hover:underline cursor-pointer' onClick={() => {setShowModal(true); setUserIdToDelete(post._id)}}>Delete</span>
+                    <span className='font-medium text-red-500 hover:underline cursor-pointer' onClick={() => {setShowModal(true); setUserIdToDelete(user._id)}}>Delete</span>
                   </Table.Cell>
                  
                 </Table.Row>
@@ -123,7 +125,7 @@ export default function DashUsers() {
                 <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-200'>Are you sure you want to delete your account?</h3>
               </div>
               <div className='flex justify-center gap-4'>
-                <Button color={'failure'} onClick={handleDeletePost}>Yes, I'm sure</Button>
+                <Button color={'failure'} onClick={handleDeleteUser}>Yes, I'm sure</Button>
                 <Button color={'gray'} onClick={() => setShowModal(false)}>No, cancel</Button>
               </div>
             </Modal.Body>
