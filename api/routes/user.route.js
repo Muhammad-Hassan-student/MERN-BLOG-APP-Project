@@ -1,5 +1,10 @@
 import express from "express";
-import { deleteUser, signOut, updateUser } from "../controller/user.controller.js";
+import {
+  deleteUser,
+  getUsers,
+  signOut,
+  updateUser,
+} from "../controller/user.controller.js";
 import { verifyToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
@@ -9,12 +14,14 @@ const router = express.Router();
 // });
 
 // ====================================== update user profile =============================
-router.put('/update/:userId',verifyToken,updateUser)
+router.put("/update/:userId", verifyToken, updateUser);
 
 // ====================================== Delete User ======================================
-router.delete('/delete/:userId',verifyToken,deleteUser)
+router.delete("/delete/:userId", verifyToken, deleteUser);
 
 // ==================================== Sign out ===========================================
-router.post('/signOut',signOut)
+router.post("/signOut", signOut);
+// ==================================== Get users ==========================================
+router.get("/getUsers", verifyToken, getUsers);
 
 export default router;
