@@ -14,6 +14,7 @@ import OnlyAdminRoutes from './components/OnlyAdminRoutes'
 import CreatePost from './pages/CreatePost'
 
 import PostUpdate from './pages/PostUpdate'
+import Post from './pages/Post'
 
 
 
@@ -39,6 +40,7 @@ function App() {
           </Route>
           <Route path='/sign-up' element={<SignUp/>}/>
           <Route path='/sign-in' element={<SignIn/>}/>
+          <Route path='/post/:postSlug' element={<Post/>}/>
         </Routes>
         <FooterComponent/>
         </BrowserRouter>
