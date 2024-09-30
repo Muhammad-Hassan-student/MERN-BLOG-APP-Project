@@ -6,7 +6,7 @@ import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import postRoutes from "./routes/post.route.js";
-
+import commentRoutes from "./routes/comment.route.js";
 //********************************* CONFIG  **************************
 //config express
 const app = express();
@@ -21,7 +21,7 @@ dotenv.config();
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
-
+app.use("/api/v1/comment", commentRoutes);
 // step 1
 //make the local host
 app.listen(3000, () => {
