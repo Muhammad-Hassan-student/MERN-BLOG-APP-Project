@@ -7,6 +7,7 @@ import {
   HiDocumentText,
   HiOutlineUserGroup,
   HiAnnotation,
+  HiOutlineChartPie,
 } from "react-icons/hi";
 import { useDispatch } from "react-redux";
 import { signOutSuccess } from "../redux/user/userSlice";
@@ -46,6 +47,18 @@ export default function DashSidebar() {
   return (
     <Sidebar className="w-full md:w-56">
       <Sidebar.ItemGroup>
+        {currentUser.isAdmin && (
+          <Link to={"/dashboard?tab=dash"}>
+            <Sidebar.Item
+              active={tab === "dash"}
+              icon={HiOutlineChartPie}
+              labelColor="dark"
+              as="div"
+            >
+              Dashboard
+            </Sidebar.Item>
+          </Link>
+        )}
         <Link to={"/dashboard?tab=profile"}>
           <Sidebar.Item
             active={tab === "profile"}
@@ -58,9 +71,9 @@ export default function DashSidebar() {
           </Sidebar.Item>
         </Link>
         {currentUser.isAdmin && (
-          <Link to={"/dashboard?tab=post"}>
+          <Link to={"/dashboard?tab=posts"}>
             <Sidebar.Item
-              active={tab === "post"}
+              active={tab === "posts"}
               icon={HiDocumentText}
               as="div"
             >
@@ -70,28 +83,27 @@ export default function DashSidebar() {
         )}
 
         {currentUser.isAdmin && (
-         <>
-           <Link to={"/dashboard?tab=users"}>
-            <Sidebar.Item
-              active={tab === "users"}
-              icon={HiOutlineUserGroup}
-              as="div"
-            >
-              Users
-            </Sidebar.Item>
-          </Link>
+          <>
+            <Link to={"/dashboard?tab=users"}>
+              <Sidebar.Item
+                active={tab === "users"}
+                icon={HiOutlineUserGroup}
+                as="div"
+              >
+                Users
+              </Sidebar.Item>
+            </Link>
 
-          <Link to={"/dashboard?tab=comments"}>
-            <Sidebar.Item
-              active={tab === "comments"}
-              icon={HiAnnotation}
-              as="div"
-            >
-              Comments
-            </Sidebar.Item>
-          </Link>
-         
-         </>
+            <Link to={"/dashboard?tab=comments"}>
+              <Sidebar.Item
+                active={tab === "comments"}
+                icon={HiAnnotation}
+                as="div"
+              >
+                Comments
+              </Sidebar.Item>
+            </Link>
+          </>
         )}
 
         <Sidebar.Item
