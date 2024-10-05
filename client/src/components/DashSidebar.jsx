@@ -45,7 +45,7 @@ export default function DashSidebar() {
   };
 
   return (
-    <Sidebar className="w-full md:w-56">
+  <Sidebar className="w-full md:w-56">
       <Sidebar.ItemGroup>
         {currentUser.isAdmin && (
           <Link to={"/dashboard?tab=dash"}>
