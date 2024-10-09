@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FaMoon,FaSun } from 'react-icons/fa'
 import { useSelector,useDispatch } from 'react-redux'
@@ -11,10 +11,21 @@ import { signOutSuccess } from '../redux/user/userSlice'
 
 export default function Header() {
     const path = useLocation().pathname;
+    const location = useLocation();
+    const naviagte=useNavigate();
     const dispatch=useDispatch();
     const { currentUser } = useSelector(state => state.user);
     const {theme} =useSelector(state => state.theme)
-   
+    const [searchTerm,setSearchTerm]=useState('');
+   //step 1 for search functionality
+    useEffect(() => {
+        const urlParams=new URLSearchParams(location.search);
+        const searchFromUrl= urlParams.get('searchTerm');
+        if(searchFromUrl){
+            setSearchTerm(searchFromUrl);
+        }
+    } ,[location.search])
+
     // sign out the user
     const handleSignOut=async () => {
         try {
@@ -31,19 +42,30 @@ export default function Header() {
           console.log(error.message);
         }
       }
+      //step b> 2 for search functionality
+      const handleSubmit= async (e) => {
+        e.preventDefault();
+        const urlParams= new URLSearchParams(location.search);
+        urlParams.set('searchTerm',searchTerm);
+        const searchQuery= urlParams.toString();
+        naviagte(`/search?${searchQuery}`);
+      }
     return (
         <Navbar className='border-b-2'>
             <Link to={'/'} className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'><span className='px-1 py-1 bg-gradient-to-r from-green-500 via-teal-400 to-indigo-400 rounded-lg text-white'>Hassan's</span>BLOG</Link>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <TextInput
                     type='text'
                     placeholder='search...'
                     rightIcon={AiOutlineSearch}
                     className='hidden lg:inline'
+                    value={searchTerm}
+                    //step 2 a> for search functionality
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </form>
-            <Button className='w-12 h-10 lg:hidden' color={'gray'} pill>
+            <Button className='w-12 h-10 lg:hidden' color={'gray'} pill >
                 <AiOutlineSearch />
             </Button>
 
@@ -103,6 +125,9 @@ export default function Header() {
                 <Navbar.Link active={path === '/about'} as={'div'}>
                     <Link to={'/about'}>About</Link>
                 </Navbar.Link>
+                <Button className='w-12 h-10 sm:hidden' color={'gray'} pill onClick={() => dispatch(toggleTheme())}>
+                   {theme === 'light' ? <FaMoon/> : <FaSun/>}
+                </Button>
             </Navbar.Collapse>
 
 
